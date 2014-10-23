@@ -15,6 +15,7 @@ from .forms import PasswordRecoveryForm, PasswordResetForm
 from .utils import get_user_model, get_username
 from .signals import user_recovers_password
 
+from django_auth_policy.forms import StrictSetPasswordForm
 
 class SaltMixin(object):
     salt = 'password_recovery'
@@ -110,7 +111,7 @@ recover = Recover.as_view()
 
 
 class Reset(SaltMixin, generic.FormView):
-    form_class = PasswordResetForm
+    form_class = StrictSetPasswordForm
     token_expires = 3600 * 48  # Two days
     template_name = 'password_reset/reset.html'
     success_url = reverse_lazy('password_reset_done')
